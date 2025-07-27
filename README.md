@@ -375,7 +375,7 @@ Quick:
    deep.details.age = 40;
    console.log(original.details.age); // 30 ✅
 
-   ✅ Looping Through Arrays in JavaScript
+✅ Looping Through Arrays in JavaScript
 
 1. Classic for loop
    let arr = [10,20,30];
