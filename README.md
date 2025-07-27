@@ -147,3 +147,231 @@ Quick:
 - Microtasks run before macrotasks.
 - Promises > setTimeout in priority.
 
+  ✅ Callbacks, Promises & async/await (Complete Notes)
+
+1. CALLBACKS
+   - A callback is a function passed as an argument to another function.
+   Example:
+     function greet(name, cb) {
+       console.log("Hello " + name);
+       cb();
+     }
+     greet("Ram", () => console.log("Done!"));
+   - Problem: "Callback Hell" → nested callbacks, hard to read.
+     setTimeout(()=> {
+       console.log("Step 1");
+       setTimeout(()=> {
+         console.log("Step 2");
+       }, 1000);
+     }, 1000);
+
+2. PROMISES
+   - Promise = future value (Pending → Fulfilled/Rejected).
+   - Create:
+       const promise = new Promise((resolve, reject) => {
+         let success = true;
+         if(success) resolve("✅ Success!");
+         else reject("❌ Error!");
+       });
+   - Consume:
+       promise
+         .then(result => console.log(result))
+         .catch(err => console.log(err))
+         .finally(() => console.log("Always runs"));
+
+3. PROMISE CHAINING
+   - Chain .then() for sequential async work.
+     Promise.resolve(1)
+       .then(x => x + 1)   // 2
+       .then(x => x * 2)   // 4
+       .then(console.log); // 4
+
+4. PROMISE METHODS
+   - Promise.all([p1,p2])
+       Waits for all → resolves with array, rejects if any fail.
+       Promise.all([Promise.resolve("A"), Promise.resolve("B")])
+         .then(console.log); // ["A","B"]
+   - Promise.race([p1,p2])
+       Resolves/rejects with the FIRST finished.
+       Promise.race([
+         new Promise(res=>setTimeout(()=>res("Fast"),100)),
+         new Promise(res=>setTimeout(()=>res("Slow"),500))
+       ]).then(console.log); // "Fast"
+   - Promise.allSettled([p1,p2])
+       Always resolves with status/value for each.
+       Promise.allSettled([
+         Promise.resolve("OK"),
+         Promise.reject("Fail")
+       ]).then(console.log);
+       // [{status:"fulfilled",value:"OK"},{status:"rejected",reason:"Fail"}]
+   - Promise.any([p1,p2])
+       Resolves with first SUCCESS, rejects only if all fail.
+       Promise.any([
+         Promise.reject("Fail1"),
+         Promise.resolve("Win!"),
+         Promise.reject("Fail2")
+       ]).then(console.log); // "Win!"
+
+5. MICROTASK vs MACROTASK
+   - Promise callbacks → microtask (higher priority)
+   - setTimeout/setInterval → macrotask (lower priority)
+   Example:
+     console.log("A");
+     setTimeout(()=>console.log("B"),0);     // macrotask
+     Promise.resolve().then(()=>console.log("C")); // microtask
+     console.log("D");
+     // Output: A, D, C, B
+
+6. ASYNC / AWAIT
+   - async fn → always returns a Promise.
+   - await → pauses inside async fn until Promise resolves.
+   Example:
+     async function test(){
+       console.log("1");
+       await Promise.resolve();
+       console.log("2");
+     }
+     test();
+     console.log("3");
+     // Output: 1,3,2
+
+7. ERROR HANDLING with async/await
+   async function getData(){
+     try {
+       let res = await Promise.reject("Error!");
+       console.log(res);
+     } catch(err){
+       console.log(err); // "Error!"
+     }
+   }
+   getData();
+
+8. async/await with Promise.all
+   async function fetchAll(){
+     const [a,b] = await Promise.all([
+       Promise.resolve("A"),
+       Promise.resolve("B")
+     ]);
+     console.log(a,b); // A B
+   }
+   fetchAll();
+
+9. CALLBACK → PROMISE → ASYNC/AWAIT
+   - Callbacks cause "callback hell".
+   - Promises flatten the structure using .then().
+   - async/await makes it look synchronous.
+
+10. QUICK SUMMARY
+    - Callback → function passed to handle async result.
+    - Promise → better way, avoids callback hell.
+    - then/catch/finally → handle result/errors.
+    - Promise.all/race/any/allSettled → handle multiple promises.
+    - async/await → cleaner syntax, still uses Promises.
+    - Always wrap async/await in try/catch for errors.
+   
+      
+✅ DOM & Event Handling
+
+1. DOM:
+   - DOM = Document Object Model, tree structure of HTML.
+   - JS can select & modify elements.
+   - Selection:
+       document.getElementById("id")
+       document.querySelector(".class")
+       document.querySelectorAll("div")
+
+2. Modifying DOM:
+   const el = document.querySelector("#demo");
+   el.textContent = "New Text";
+   el.style.color = "red";
+   const newDiv = document.createElement("div");
+   document.body.appendChild(newDiv);
+
+3. Event Handling:
+   - Add events using addEventListener:
+       btn.addEventListener("click", ()=>console.log("Clicked!"));
+
+4. Event Propagation:
+   - Phases: Capturing → Target → Bubbling.
+   - addEventListener("click", fn, true) → capturing
+   - addEventListener("click", fn, false) → bubbling (default)
+
+5. Event Delegation:
+   - Add listener to parent to handle child events.
+   parent.addEventListener("click", e => {
+     if(e.target.matches(".child")) console.log("Child clicked");
+   });
+
+6. preventDefault vs stopPropagation:
+   - preventDefault() → stops browser’s default action.
+     Example: stop link navigation or form reload.
+   - stopPropagation() → stops event from bubbling to parent.
+
+7. Examples:
+   - Link:
+       link.addEventListener("click", e=>{
+         e.preventDefault(); // stops opening link
+       });
+   - Form:
+       form.addEventListener("submit", e=>{
+         e.preventDefault(); // stops page reload
+       });
+
+✅ Copy Concepts in JavaScript
+
+1. Reference Assignment (No Copy)
+   let a = [1,2,3];
+   let b = a; // same reference
+   b.push(4);
+   console.log(a); // [1,2,3,4] ❌ affected
+
+2. Shallow Copy
+   - Copies only 1st level, nested objects still shared.
+   - Arrays:
+       let arr = [1,2,3];
+       let copy1 = [...arr];
+       let copy2 = arr.slice();
+   - Objects:
+       let obj = {a:1,b:2};
+       let copy = {...obj};
+   - Problem:
+       let obj = {a:1,nested:{x:10}};
+       let shallow = {...obj};
+       shallow.nested.x = 99;
+       console.log(obj.nested.x); // 99 ❌
+
+3. Deep Copy
+   - Fully independent copy including nested.
+   - Methods:
+       ✅ JSON:
+         let deep = JSON.parse(JSON.stringify(obj));
+       ✅ structuredClone (modern):
+         let deep = structuredClone(obj);
+       ✅ lodash:
+         let deep = _.cloneDeep(obj);
+   - Example:
+       let obj = {a:1,nested:{x:10}};
+       let deep = structuredClone(obj);
+       deep.nested.x = 99;
+       console.log(obj.nested.x); // 10 ✅
+
+4. Quick Comparison
+   - b=a → same reference
+   - Shallow copy → copies top level only, nested shared
+   - Deep copy → completely new independent copy
+
+5. Full Example
+   let original = { name:"Ram", skills:["JS"], details:{age:25} };
+
+   let ref = original;
+   ref.name="Sham";
+   console.log(original.name); // Sham ❌
+
+   let shallow = {...original};
+   shallow.details.age = 30;
+   console.log(original.details.age); // 30 ❌
+
+   let deep = structuredClone(original);
+   deep.details.age = 40;
+   console.log(original.details.age); // 30 ✅
+
