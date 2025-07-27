@@ -375,3 +375,61 @@ Quick:
    deep.details.age = 40;
    console.log(original.details.age); // 30 ✅
 
+   ✅ Looping Through Arrays in JavaScript
+
+1. Classic for loop
+   let arr = [10,20,30];
+   for(let i=0; i<arr.length; i++){
+     console.log(arr[i]);
+   }
+   ✅ Use when you need index & control.
+
+2. for...of
+   for(let val of arr){
+     console.log(val);
+   }
+   ✅ Simple, just values.
+
+3. forEach()
+   arr.forEach((val, idx) => console.log(idx, val));
+   ✅ Easy, but cannot break/continue.
+
+4. map()
+   let doubled = arr.map(x => x*2);
+   ✅ Returns new transformed array.
+
+5. filter()
+   let evens = arr.filter(x => x%2===0);
+   ✅ Returns subset of array.
+
+6. reduce()
+   let sum = arr.reduce((acc,cur)=>acc+cur,0);
+   ✅ Reduces array to a single value.
+
+7. find() & findIndex()
+   arr.find(x=>x>10);      // first match
+   arr.findIndex(x=>x>10); // index of first match
+
+8. some() & every()
+   arr.some(x=>x>10);  // true if any matches
+   arr.every(x=>x>0);  // true if all match
+
+9. for...in (not for arrays)
+   for(let key in arr){ console.log(key, arr[key]); }
+   ⚠️ Best for objects, not arrays.
+
+10. while loop
+    let i=0;
+    while(i<arr.length){ console.log(arr[i]); i++; }
+
+11. Array.from()
+    - Converts iterable or array-like to array.
+    let str = "abc";
+    console.log(Array.from(str)); // ['a','b','c']
+
+    - Can also map:
+    console.log(Array.from([1,2,3], x=>x*2)); // [2,4,6]
+
+
+
+
