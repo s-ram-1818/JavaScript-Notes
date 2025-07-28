@@ -430,6 +430,86 @@ Quick:
     - Can also map:
     console.log(Array.from([1,2,3], x=>x*2)); // [2,4,6]
 
+Certainly! Here's the **JavaScript Arrays – definitions with examples in clean plain text format** (easy to copy/paste into your notes or Google Keep):
+
+
+
+## JavaScript Arrays – Definitions with Examples
+
+1. Definition:
+   An array is an **ordered collection of elements** (values), indexed from 0. Arrays can store elements of any data type (numbers, strings, objects, etc.).
+
+2. Declaration:
+
+* Array literal:
+  `let arr = [1, 2, 3]`
+* Array constructor:
+  `let arr2 = new Array(4, 5)`
+* Sparse array (empty slots):
+  `let arr3 = Array(3)`  → `[ <3 empty items> ]`
+
+3. Access & Length:
+
+* Access element by index:
+  `arr[0]`  →  `1`
+* Get total number of elements:
+  `arr.length`  →  `3`
+
+4. Mutating Methods (modify original array):
+
+* `arr.push(4)`  →  `[1, 2, 3, 4]`
+* `arr.pop()`  →  `[1, 2, 3]`
+* `arr.shift()`  →  `[2, 3]`
+* `arr.unshift(0)`  →  `[0, 2, 3]`
+* `arr.splice(1, 1)`  →  `[0, 3]`
+
+5. Non-Mutating Methods (return new array or value):
+
+* `arr.slice(0, 2)`  →  `[0, 3]`
+* `arr.concat([5, 6])`  →  `[0, 3, 5, 6]`
+* `arr.map(x => x * 2)`  →  `[0, 6]`
+* `arr.filter(x => x > 1)`  →  `[3]`
+* `arr.reduce((a, b) => a + b, 0)`  →  `3`
+
+6. Spread Operator & Destructuring:
+
+* Spread (copy array):
+  `let newArr = [...arr]`  →  `[0, 3]`
+* Destructuring:
+  `let [a, b] = arr`  →  `a = 0`, `b = 3`
+
+7. Check if Array:
+
+* `Array.isArray(arr)`  →  `true`
+
+8. Remove Duplicates:
+
+* Using Set and spread:
+  `let nums = [1, 2, 2, 3]`
+  `[...new Set(nums)]`  →  `[1, 2, 3]`
+
+9. Flatten Nested Arrays:
+
+* `let nested = [1, [2, [3]]]`
+* `nested.flat(Infinity)`  →  `[1, 2, 3]`
+
+10. Create Range of Numbers:
+
+* `Array.from({ length: 5 }, (_, i) => i + 1)`
+  →  `[1, 2, 3, 4, 5]`
+
+11. Sort Gotcha (Important Interview Point):
+
+* Lexicographic sort (default):
+  `[1, 30, 4].sort()`  →  `[1, 30, 4]`
+* Correct numeric sort:
+  `[1, 30, 4].sort((a, b) => a - b)`  →  `[1, 4, 30]`
+
+---
+
+Let me know if you want the same format for **Loops**, **Objects**, or the next JavaScript topic.
+
+
 
 
 
